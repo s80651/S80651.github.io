@@ -7,12 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     
     <style>
-        /* Rule 3 & 4: Typography and Color Palette */
+        /* Typography and Color Palette */
         :root {
-            --color-background: #F8F8F8; /* Soft Grey Background */
-            --color-card-bg: #FFFFFF; /* White Card Background */
-            --color-text-primary: #1A1A1A; /* Near Black */
-            --color-text-secondary: #6A6A6A; /* Soft Grey Text */
+            --color-background: #F8F8F8;
+            --color-card-bg: #FFFFFF;
+            --color-text-primary: #1A1A1A;
+            --color-text-secondary: #6A6A6A;
             --color-accent: #0056B3; /* Deep Ocean Blue Accent (UMT Theme) */
             --border-radius: 12px;
             --font-family-primary: 'Inter', sans-serif;
@@ -40,13 +40,10 @@
         /* ------------------------------------------- */
 
         .bento-grid {
-            /* Desktop/Tablet Grid Setup */
             display: grid;
             gap: 20px;
             width: 100%;
             max-width: 1200px;
-            
-            /* Initial layout for larger screens (3-column structure) */
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: auto;
         }
@@ -56,16 +53,17 @@
             border-radius: var(--border-radius);
             padding: 20px;
             box-shadow: var(--box-shadow);
-            border: 1px solid #EDEDED; /* Light subtle border */
-            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #EDEDED;
+            transition: transform 0.3s, box-shadow 0.3s;
             display: flex;
             flex-direction: column;
             overflow: hidden; 
         }
         
+        /* Subtle scale-up hover effect */
         .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: scale(1.01);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .card h3 {
@@ -92,14 +90,54 @@
         .card-profile {
             grid-column: span 2;
             grid-row: span 2;
+            
+            /* --- BACKGROUND IMAGE IMPLEMENTATION --- */
+            background-image: url('bg.jpg'); /* 1. Set the image file */
+            background-size: cover;          /* 2. Ensure image covers the entire card */
+            background-position: center;     /* 3. Center the image */
+            background-color: #003366;       /* Fallback: Dark blue if image fails */
         }
+        
+        .card-profile:hover {
+            transform: scale(1.005); /* Less zoom for the large card with image */
+        }
+
+        /* --- TEXT CONTRAST ADJUSTMENTS FOR IMAGE BACKGROUND --- */
+        .card-profile h1, 
+        .card-profile p,
+        .card-profile h3 {
+            color: #FFFFFF !important; /* Force white text over the background image */
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); /* Text shadow for better readability */
+        }
+        
+        .card-profile .profile-header p {
+            color: #ADD8E6 !important; /* Lighter accent color for the program title */
+        }
+
+        .card-profile .profile-tagline {
+            color: #F0F0F0;
+            border-left-color: #ADD8E6; 
+        }
+
+        .card-profile .social-links li a {
+            color: #FFFFFF !important;
+            transition: color 0.2s, background-color 0.2s;
+        }
+
+        .card-profile .social-links li a:hover {
+            color: var(--color-accent) !important; 
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        /* ---------------------------------------------------- */
 
         /* Card 6 (Playlist): Wide box at the bottom (Span all 3 columns) */
         .card-playlist {
             grid-column: 1 / -1; 
         }
-
-        /* Custom Content Styling */
+        
+        /* ... (rest of the styling remains the same) ... */
         .profile-header {
             margin-bottom: 20px;
         }
@@ -108,12 +146,6 @@
             margin-bottom: 5px;
             font-weight: 800;
             line-height: 1.2;
-        }
-        .profile-header p {
-            color: var(--color-accent);
-            font-weight: 500;
-            font-size: 1.1rem;
-            margin-top: 5px;
         }
         
         .profile-tagline {
@@ -130,16 +162,7 @@
             gap: 15px;
             margin-top: 20px;
         }
-        .social-links li a {
-            text-decoration: none;
-            color: var(--color-text-secondary);
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .social-links li a:hover {
-            color: var(--color-accent);
-        }
-
+        
         .subject-list {
             list-style: none;
             padding: 0;
@@ -186,7 +209,7 @@
 
 
         /* ------------------------------------------- */
-        /* Rule 2: Mobile Responsiveness (Stacking) */
+        /* Mobile Responsiveness (Stacking) */
         /* ------------------------------------------- */
         @media (max-width: 768px) {
             body {
@@ -194,42 +217,19 @@
             }
 
             .bento-grid {
-                /* Stacks all items vertically */
                 grid-template-columns: 1fr;
                 gap: 15px;
             }
 
-            /* Resetting desktop grid spans to ensure vertical stacking */
             .card-profile,
             .card-location,
             .card-tech-stack,
             .card-case-study,
             .card-hobby,
+            .card-reflection,
             .card-playlist {
                 grid-column: span 1 !important;
                 grid-row: auto !important;
-            }
-            
-            /* Adjusting Card 1 size for mobile */
-            .profile-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            /* Simplifying lists */
-            .subject-list {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            }
-        }
-        
-        /* Tablet Adjustments */
-        @media (min-width: 769px) and (max-width: 1024px) {
-             .bento-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            /* Card 1 shrinks its height slightly */
-            .card-profile {
-                grid-row: span 1; 
             }
         }
     </style>
@@ -252,8 +252,8 @@
                 <br>
                 <h3>Connect</h3>
                 <ul class="social-links">
-                    <li><a href="#" target="_blank">LinkedIn</a></li>
-                    <li><a href="#" target="_blank">GitHub</a></li>
+                    <li><a href="#" target="https://www.linkedin.com">LinkedIn</a></li>
+                    <li><a href="#" target="https://github.com/S80651">GitHub</a></li>
                     <li><a href="https://umt.edu.my/" target="_blank">UMT Portal</a></li>
                 </ul>
             </div>
@@ -270,6 +270,11 @@
             <p><strong>Hobby:</strong> Evening walks at Pantai UMT</p>
             <p style="margin-top: 5px; color: var(--color-text-secondary);">Focusing on mental wellness and enjoying the coastal environment.</p>
         </div>
+        
+        <div class="card card-reflection">
+            <h3>Why Food Tech Matters in Malaysia</h3>
+            <p>Sustainable food security is crucial for our future. By optimizing local processing methods, we can reduce waste and improve nutrition across the nation.</p>
+        </div>
 
         <div class="card card-tech-stack">
             <h3>Key Subjects & Skills</h3>
@@ -285,22 +290,21 @@
             <h3>Recent Case Study</h3>
             <p><strong>Title:</strong> Starch Gelatinization in Local Kuih</p>
             <p style="margin-top: 10px; color: var(--color-text-secondary);">
-                Analyzing texture profiles of **Kuih Lapis** to understand the impact of ingredient ratios on its distinct layering structure and mouthfeel. 
+                Analyzing texture profiles of **Kuih Lapis** to understand the impact of ingredient ratios on its distinct layering structure and mouthfeel.
             </p>
         </div>
 
         <div class="card card-playlist">
             <h3>Study Playlist</h3>
             <div class="playlist-placeholder">
-                Placeholder for a Music Player Widget / Spotify Embed
-            </div>
+                Placeholder
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/7flKzMJj46Ttsb62sM93zy?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
 
     </div>
 
     <script>
         function updateClock() {
-            // Options for Malaysia time (UTC+8)
             const options = {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -314,9 +318,7 @@
             document.getElementById('live-time').textContent = timeString;
         }
 
-        // Update the clock every second
         setInterval(updateClock, 1000);
-        // Initial call to display immediately
         updateClock();
     </script>
     
